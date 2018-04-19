@@ -11,6 +11,7 @@
 -------
     使用vue-router搭建路由，登录、注册和首页都为一级路由。在首页的一级路由下有创建二级路由，是页面中的导航的跳转路径。
     vue-cli已经配置好了路由，只需将配置的信息写在实例对象中。
+    
 数据管理: VueX
 --------
      Vuex的状态存储是响应式的，当Vue组件从store中读取状态时，若store中状态发生改变，响应的组件也会得到更新状态。但不能直接改变state,必须通过显示的提交(commit)mutations来追踪每一个状态的变化。
@@ -52,8 +53,42 @@
 
 遇到的困难及解决方式：
 ----
-    在首页中选择月份区间时，使用element-ui组件时，不能够选到月份。
-        我们采用了element-UI中选择月的组件，可以获取到月份，封装了一个方法格式化日期.
+    在首页中选择月份区间时，使用element-ui组件时，不能选到月份。
+        我们采用了element-UI中选择月的组件，可以获取到月份，封装了一个方法格式化日期.在点击近7天时，触发一个可以获取区间中所以月份的函数，通过请求后台接口获取参数，生成了Echarts图表。
+        
+    //格式化日期
+    format(date){
+      let day = new Date(date);
+      let month = "" + (day.getMonth() + 1);
+      let year = day.getFullYear();
+      if(month.length < 2) month = "0" + month;
+      return [year, month].join('/');
+    },
+    //获取全部的月份
+    getDateArea(start,end){
+      let [startYear,startMonth] = start.split('/');
+      let [endYear,endMonth] = end.split('/')
+      let arr = [];
+      while(startYear <= endYear) {
+        if(startYear == endYear) {
+          for(let i=1;i<= endMonth;i++) {
+            arr.push(`${startYear} /${i}`)
+          }
+        }else if(startYear <= endYear) {
+          for(let i=startMonth;i<=12;i++){
+            arr.push(`${startYear}/${i}`)
+          }
+        }
+        startYear = Number(startYear) + 1
+      }
+      return arr;
+    }
+    
+    
+        在新建创意时，添加创意的按钮每点击一次都需要生成一个tab切换页，element-ui中tab标签页时需要将添加创意的按钮定位到tab切换行的后面，不能够很好  的满足需求，所以我们我们模仿element-ui封装了tab切换组件。
+    
+    在上传图片时，用到了multer，在vue文件中，因为少写一个字段导致图片上传不成功。
+        在使用form表单上传图片时，form表单需要写enctype="multipart/form-data" 在input元素上需要写name="file"
 
 打包上线
 ----
