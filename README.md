@@ -85,7 +85,7 @@
     }
     
     
-        在新建创意时，添加创意的按钮每点击一次都需要生成一个tab切换页，element-ui中tab标签页时需要将添加创意的按钮定位到tab切换行的后面，不能够很好  的满足需求，所以我们我们模仿element-ui封装了tab切换组件。
+        在新建创意时，添加创意的按钮每点击一次都需要生成一个tab切换页，element-ui中tab标签页时需要将添加创意的按钮定位到tab切换行的后面，不能够很好  的满足需求，所以我们我们模仿element-ui封装了tab切换组件。<br/>
     
     在上传图片时，用到了multer，在vue文件中，因为少写一个字段导致图片上传不成功。
         在使用form表单上传图片时，form表单需要写enctype="multipart/form-data" 在input元素上需要写name="file"
